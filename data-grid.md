@@ -2,7 +2,7 @@ Data grid
 =========
 
 Data grid or GridView is one of the most powerful Yii widgets. It is extremely useful if you need to quickly build admin
-section of the system. It takes data from [data provider](data-provider.md) and renders each row using a set of columns
+section of the system. It takes data from [data provider](data-providers.md) and renders each row using a set of columns
 presenting data in a form of a table.
 
 Each row of the table represents the data of a single data item, and a column usually represents an attribute of
@@ -12,7 +12,7 @@ Grid view supports both sorting and pagination of the data items. The sorting an
 or normal page request. A benefit of using GridView is that when the user disables JavaScript, the sorting and pagination
 automatically degrade to normal page requests and are still functioning as expected.
 
-The minimal code needed to use CGridView is as follows:
+The minimal code needed to use GridView is as follows:
 
 ```php
 use yii\data\GridView;
@@ -50,12 +50,10 @@ echo GridView::widget([
 		'username',
 		// More complex one.
 		[
-			'class' => 'DataColumn', // can be omitted, default
-			'name' => 'column1',
+			'class' => 'yii\grid\DataColumn', // can be omitted, default
 			'value' => function ($data) {
 				return $data->name;
 			},
-			'type'=>'raw',
 		],
 	],
 ]);
@@ -127,7 +125,7 @@ Available properties you can configure are:
   controller.
 - `template` the template used for composing each cell in the action column. Tokens enclosed within curly brackets are
   treated as controller action IDs (also called *button names* in the context of action column). They will be replaced
-  by the corresponding button rendering callbacks specified in [[buttons]]. For example, the token `{view}` will be
+  by the corresponding button rendering callbacks specified in [[yii\grid\ActionColumn::$buttons|buttons]]. For example, the token `{view}` will be
   replaced by the result of the callback `buttons['view']`. If a callback cannot be found, the token will be replaced
   with an empty string. Default is `{view} {update} {delete}`.
 - `buttons` is an array of button rendering callbacks. The array keys are the button names (without curly brackets),
@@ -143,14 +141,14 @@ In the code above `$url` is the URL that the column creates for the button, and 
 rendered for the current row.
 
 - `urlCreator` is a callback that creates a button URL using the specified model information. The signature of
-  the callback should be the same as that of [[createUrl()]]. If this property is not set, button URLs will be created
-  using [[createUrl()]].
+  the callback should be the same as that of [[yii\grid\ActionColumn\createUrl()]]. If this property is not set,
+  button URLs will be created using [[yii\grid\ActionColumn\createUrl()]].
 
 #### Checkbox column
 
 CheckboxColumn displays a column of checkboxes.
  
-To add a CheckboxColumn to the [[GridView]], add it to the [[GridView::columns|columns]] configuration as follows:
+To add a CheckboxColumn to the [[yii\grid\GridView]], add it to the [[yii\grid\GridView::$columns|columns]] configuration as follows:
  
 ```php
 echo GridView::widget([
@@ -184,11 +182,6 @@ echo GridView::widget([
 	'columns' => [
 		['class' => 'yii\grid\SerialColumn'], // <-- here
 ```
-
-TODO: rewrite these:
-
-- https://github.com/samdark/a-guide-to-yii-grids-lists-and-data-providers/blob/master/grid-columns.md
-- https://github.com/samdark/a-guide-to-yii-grids-lists-and-data-providers/pull/1
 
 Sorting data
 ------------
