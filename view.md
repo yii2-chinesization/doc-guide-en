@@ -18,7 +18,7 @@ The view is typically called from controller action using the [[yii\base\Control
 ```php
 public function actionIndex()
 {
-	return $this->render('index', ['username' => 'samdark']);
+    return $this->render('index', ['username' => 'samdark']);
 }
 ```
 
@@ -74,8 +74,8 @@ echo \yii\widgets\Menu::widget(['items' => $items]);
 
 // Passing an array to initialize the object properties
 $form = \yii\widgets\ActiveForm::begin([
-	'options' => ['class' => 'form-horizontal'],
-	'fieldConfig' => ['inputOptions' => ['class' => 'input-xlarge']],
+    'options' => ['class' => 'form-horizontal'],
+    'fieldConfig' => ['inputOptions' => ['class' => 'input-xlarge']],
 ]);
 ... form inputs here ...
 \yii\widgets\ActiveForm::end();
@@ -104,7 +104,7 @@ use yii\helpers\Html;
 ?>
 
 <div class="username">
-	<?= Html::encode($user->name) ?>
+    <?= Html::encode($user->name) ?>
 </div>
 ```
 
@@ -117,7 +117,7 @@ use yii\helpers\HtmlPurifier;
 ?>
 
 <div class="post">
-	<?= HtmlPurifier::process($post->text) ?>
+    <?= HtmlPurifier::process($post->text) ?>
 </div>
 ```
 
@@ -162,15 +162,15 @@ The first argument is an map of `<meta>` tag option names and values. The code a
 Sometimes there's a need to have only a single tag of a type. In this case you need to specify the second argument:
 
 ```html
-$this->registerMetaTag(['description' => 'This is my cool website made with Yii!'], 'meta-description');
-$this->registerMetaTag(['description' => 'This website is about funny raccoons.'], 'meta-description');
+$this->registerMetaTag(['name' => 'description', 'content' => 'This is my cool website made with Yii!'], 'meta-description');
+$this->registerMetaTag(['name' => 'description', 'content' => 'This website is about funny raccoons.'], 'meta-description');
 ```
 
 If there are multiple calls with the same value of the second argument (`meta-description` in this case), the latter will
 override the former and only a single tag will be rendered:
 
 ```html
-<meta description="This website is about funny raccoons.">
+<meta name="description" content="This website is about funny raccoons.">
 ```
 
 ### Registering link tags
@@ -180,10 +180,10 @@ server. Yii view object has a method to work with these:
 
 ```php
 $this->registerLinkTag([
-	'title' => 'Lives News for Yii Framework',
-	'rel' => 'alternate',
-	'type' => 'application/rss+xml',
-	'href' => 'http://www.yiiframework.com/rss.xml/',
+    'title' => 'Lives News for Yii Framework',
+    'rel' => 'alternate',
+    'type' => 'application/rss+xml',
+    'href' => 'http://www.yiiframework.com/rss.xml/',
 ]);
 ```
 
@@ -300,16 +300,16 @@ use yii\helpers\Html;
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset ?>"/>
-	<title><?= Html::encode($this->title) ?></title>
-	<?php $this->head() ?>
+    <meta charset="<?= Yii::$app->charset ?>"/>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
-	<div class="container">
-		<?= $content ?>
-	</div>
-	<footer class="footer">© 2013 me :)</footer>
+    <div class="container">
+        <?= $content ?>
+    </div>
+    <footer class="footer">© 2013 me :)</footer>
 <?php $this->endBody() ?>
 </body>
 </html>
@@ -343,8 +343,8 @@ use yii\helpers\Html;
 ?>
 
 <div class="profile">
-	<h2><?= Html::encode($username) ?></h2>
-	<p><?= Html::encode($tagline) ?></p>
+    <h2><?= Html::encode($username) ?></h2>
+    <p><?= Html::encode($tagline) ?></p>
 </div>
 ```
 
@@ -352,14 +352,14 @@ Then we're using it in `index.php` view where we display a list of users:
 
 ```php
 <div class="user-index">
-	<?php
-	foreach ($users as $user) {
-		echo $this->render('_profile', [
-			'username' => $user->name,
-			'tagline' => $user->tagline,
-		]);
-	}
-	?>
+    <?php
+    foreach ($users as $user) {
+        echo $this->render('_profile', [
+            'username' => $user->name,
+            'tagline' => $user->tagline,
+        ]);
+    }
+    ?>
 </div>
 ```
 
@@ -367,10 +367,24 @@ Same way we can reuse it in another view displaying a single user profile:
 
 ```php
 echo $this->render('_profile', [
-	'username' => $user->name,
-	'tagline' => $user->tagline,
+    'username' => $user->name,
+    'tagline' => $user->tagline,
 ]);
 ```
+
+
+When you call `render()` to render a partial in a current view, you may use different formats to refer to the partial.
+The most commonly used format is the so-called relative view name which is as shown in the above example.
+The partial view file is relative to the directory containing the current view. If the partial is located under
+a subdirectory, you should include the subdirectory name in the view name, e.g., `public/_profile`.
+
+You may use path alias to specify a view, too. For example, `@app/views/common/_profile`.
+
+And you may also use the so-called absolute view names, e.g., `/user/_profile`, `//user/_profile`.
+An absolute view name starts with a single slashes or double slashes. If it starts with a single slash,
+the view file will be looked for under the view path of the currently active module. Otherwise, it will
+will be looked for under the application view path.
+
 
 ### Accessing context
 
@@ -394,12 +408,12 @@ from [[yii\base\View]] or [[yii\web\View]]. It can be done via application confi
 
 ```php
 return [
-	// ...
-	'components' => [
-		'view' => [
-			'class' => 'app\components\View',
-		],
-		// ...
-	],
+    // ...
+    'components' => [
+        'view' => [
+            'class' => 'app\components\View',
+        ],
+        // ...
+    ],
 ];
 ```

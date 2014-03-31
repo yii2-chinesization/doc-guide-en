@@ -22,25 +22,25 @@ to application configuration (for "basic" web application it's `config/web.php`)
 
 ```php
 return [
-	// ...
-	'components' => [
-		// ...
-		'db' => [
-			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host=localhost;dbname=mydatabase', // MySQL, MariaDB
-			//'dsn' => 'sqlite:/path/to/database/file', // SQLite
-			//'dsn' => 'pgsql:host=localhost;port=5432;dbname=mydatabase', // PostgreSQL
-			//'dsn' => 'cubrid:dbname=demodb;host=localhost;port=33000', // CUBRID
-			//'dsn' => 'sqlsrv:Server=localhost;Database=mydatabase', // MS SQL Server, sqlsrv driver
-			//'dsn' => 'dblib:host=localhost;dbname=mydatabase', // MS SQL Server, dblib driver
-			//'dsn' => 'mssql:host=localhost;dbname=mydatabase', // MS SQL Server, mssql driver
-			//'dsn' => 'oci:dbname=//localhost:1521/mydatabase', // Oracle
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		],
-	],
-	// ...
+    // ...
+    'components' => [
+        // ...
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=mydatabase', // MySQL, MariaDB
+            //'dsn' => 'sqlite:/path/to/database/file', // SQLite
+            //'dsn' => 'pgsql:host=localhost;port=5432;dbname=mydatabase', // PostgreSQL
+            //'dsn' => 'cubrid:dbname=demodb;host=localhost;port=33000', // CUBRID
+            //'dsn' => 'sqlsrv:Server=localhost;Database=mydatabase', // MS SQL Server, sqlsrv driver
+            //'dsn' => 'dblib:host=localhost;dbname=mydatabase', // MS SQL Server, dblib driver
+            //'dsn' => 'mssql:host=localhost;dbname=mydatabase', // MS SQL Server, mssql driver
+            //'dsn' => 'oci:dbname=//localhost:1521/mydatabase', // Oracle
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
+    ],
+    // ...
 ];
 ```
 
@@ -65,9 +65,9 @@ If you don't want to define the connection as an application component you can i
 
 ```php
 $connection = new \yii\db\Connection([
-	'dsn' => $dsn,
- 	'username' => $username,
- 	'password' => $password,
+    'dsn' => $dsn,
+     'username' => $username,
+     'password' => $password,
 ]);
 $connection->open();
 ```
@@ -78,18 +78,18 @@ $connection->open();
 >
 ```php
 return [
-	// ...
-	'components' => [
-		// ...
-		'db' => [
-			'class' => 'yii\db\Connection',
-			// ...
-			'on afterOpen' => function($event) {
-				$event->sender->createCommand("SET time_zone = 'UTC'")->execute();
-			}
-		],
-	],
-	// ...
+    // ...
+    'components' => [
+        // ...
+        'db' => [
+            'class' => 'yii\db\Connection',
+            // ...
+            'on afterOpen' => function($event) {
+                $event->sender->createCommand("SET time_zone = 'UTC'")->execute();
+            }
+        ],
+    ],
+    // ...
 ];
 ```
 
@@ -103,28 +103,28 @@ Once you have a connection instance you can execute SQL queries using [[yii\db\C
 When query returns a set of rows:
 
 ```php
-$command = $connection->createCommand('SELECT * FROM tbl_post');
+$command = $connection->createCommand('SELECT * FROM post');
 $posts = $command->queryAll();
 ```
 
 When only a single row is returned:
 
 ```php
-$command = $connection->createCommand('SELECT * FROM tbl_post WHERE id=1');
+$command = $connection->createCommand('SELECT * FROM post WHERE id=1');
 $post = $command->queryOne();
 ```
 
 When there are multiple values from the same column:
 
 ```php
-$command = $connection->createCommand('SELECT title FROM tbl_post');
+$command = $connection->createCommand('SELECT title FROM post');
 $titles = $command->queryColumn();
 ```
 
 When there's a scalar value:
 
 ```php
-$command = $connection->createCommand('SELECT COUNT(*) FROM tbl_post');
+$command = $connection->createCommand('SELECT COUNT(*) FROM post');
 $postCount = $command->queryScalar();
 ```
 
@@ -133,7 +133,7 @@ $postCount = $command->queryScalar();
 If SQL executed doesn't return any data you can use command's `execute` method:
 
 ```php
-$command = $connection->createCommand('UPDATE tbl_post SET status=1 WHERE id=1');
+$command = $connection->createCommand('UPDATE post SET status=1 WHERE id=1');
 $command->execute();
 ```
 
@@ -141,23 +141,23 @@ Alternatively the following syntax that takes care of proper table and column na
 
 ```php
 // INSERT
-$connection->createCommand()->insert('tbl_user', [
-	'name' => 'Sam',
-	'age' => 30,
+$connection->createCommand()->insert('user', [
+    'name' => 'Sam',
+    'age' => 30,
 ])->execute();
 
 // INSERT multiple rows at once
-$connection->createCommand()->batchInsert('tbl_user', ['name', 'age'], [
-	['Tom', 30],
-	['Jane', 20],
-	['Linda', 25],
+$connection->createCommand()->batchInsert('user', ['name', 'age'], [
+    ['Tom', 30],
+    ['Jane', 20],
+    ['Linda', 25],
 ])->execute();
 
 // UPDATE
-$connection->createCommand()->update('tbl_user', ['status' => 1], 'age > 30')->execute();
+$connection->createCommand()->update('user', ['status' => 1], 'age > 30')->execute();
 
 // DELETE
-$connection->createCommand()->delete('tbl_user', 'status = 0')->execute();
+$connection->createCommand()->delete('user', 'status = 0')->execute();
 ```
 
 Quoting table and column names
@@ -189,7 +189,7 @@ Prepared statements
 In order to securely pass query parameters you can use prepared statements:
 
 ```php
-$command = $connection->createCommand('SELECT * FROM tbl_post WHERE id=:id');
+$command = $connection->createCommand('SELECT * FROM post WHERE id=:id');
 $command->bindValue(':id', $_GET['id']);
 $post = $command->query();
 ```
@@ -197,7 +197,7 @@ $post = $command->query();
 Another usage is performing a query multiple times while preparing it only once:
 
 ```php
-$command = $connection->createCommand('DELETE FROM tbl_post WHERE id=:id');
+$command = $connection->createCommand('DELETE FROM post WHERE id=:id');
 $command->bindParam(':id', $id);
 
 $id = 1;
@@ -215,12 +215,12 @@ You can perform transactional SQL queries like the following:
 ```php
 $transaction = $connection->beginTransaction();
 try {
-	$connection->createCommand($sql1)->execute();
- 	$connection->createCommand($sql2)->execute();
-	// ... executing other SQL statements ...
-	$transaction->commit();
+    $connection->createCommand($sql1)->execute();
+     $connection->createCommand($sql2)->execute();
+    // ... executing other SQL statements ...
+    $transaction->commit();
 } catch(Exception $e) {
-	$transaction->rollBack();
+    $transaction->rollBack();
 }
 ```
 
@@ -230,20 +230,20 @@ You can also nest multiple transactions, if needed:
 // outer transaction
 $transaction1 = $connection->beginTransaction();
 try {
-	$connection->createCommand($sql1)->execute();
+    $connection->createCommand($sql1)->execute();
 
-	// inner transaction
-	$transaction2 = $connection->beginTransaction();
-	try {
-		$connection->createCommand($sql2)->execute();
-		$transaction2->commit();
-	} catch (Exception $e) {
-		$transaction2->rollBack();
-	}
+    // inner transaction
+    $transaction2 = $connection->beginTransaction();
+    try {
+        $connection->createCommand($sql2)->execute();
+        $transaction2->commit();
+    } catch (Exception $e) {
+        $transaction2->rollBack();
+    }
 
-	$transaction1->commit();
+    $transaction1->commit();
 } catch (Exception $e) {
-	$transaction1->rollBack();
+    $transaction1->rollBack();
 }
 ```
 
@@ -281,10 +281,10 @@ These can be used as follows:
 
 ```php
 // CREATE TABLE
-$connection->createCommand()->createTable('tbl_post', [
-	'id' => 'pk',
-	'title' => 'string',
-	'text' => 'text',
+$connection->createCommand()->createTable('post', [
+    'id' => 'pk',
+    'title' => 'string',
+    'text' => 'text',
 ]);
 ```
 

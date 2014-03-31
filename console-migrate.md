@@ -42,15 +42,15 @@ file named `m101129_185401_create_news_table.php`. This file will be created wit
 ```php
 class m101129_185401_create_news_table extends \yii\db\Migration
 {
-	public function up()
-	{
-	}
+    public function up()
+    {
+    }
 
-	public function down()
-	{
-		echo "m101129_185401_create_news_table cannot be reverted.\n";
-		return false;
-	}
+    public function down()
+    {
+        echo "m101129_185401_create_news_table cannot be reverted.\n";
+        return false;
+    }
 }
 ```
 
@@ -78,19 +78,19 @@ use yii\db\Schema;
 
 class m101129_185401_create_news_table extends \yii\db\Migration
 {
-	public function up()
-	{
-		$this->createTable('tbl_news', [
-			'id' => 'pk',
-			'title' => Schema::TYPE_STRING . ' NOT NULL',
-			'content' => Schema::TYPE_TEXT,
-		]);
-	}
+    public function up()
+    {
+        $this->createTable('news', [
+            'id' => 'pk',
+            'title' => Schema::TYPE_STRING . ' NOT NULL',
+            'content' => Schema::TYPE_TEXT,
+        ]);
+    }
 
-	public function down()
-	{
-		$this->dropTable('tbl_news');
-	}
+    public function down()
+    {
+        $this->dropTable('news');
+    }
 
 }
 ```
@@ -122,26 +122,26 @@ use yii\db\Schema;
 
 class m101129_185401_create_news_table extends \yii\db\Migration
 {
-	public function safeUp()
-	{
-		$this->createTable('tbl_news', [
-			'id' => 'pk',
-			'title' => Schema::TYPE_STRING . ' NOT NULL',
-			'content' => Schema::TYPE_TEXT,
-		]);
+    public function safeUp()
+    {
+        $this->createTable('news', [
+            'id' => 'pk',
+            'title' => Schema::TYPE_STRING . ' NOT NULL',
+            'content' => Schema::TYPE_TEXT,
+        ]);
 
-		$this->createTable('tbl_user', [
-			'id' => 'pk',
-			'login' => Schema::TYPE_STRING . ' NOT NULL',
-			'password' => Schema::TYPE_STRING . ' NOT NULL',
-		]);
-	}
+        $this->createTable('user', [
+            'id' => 'pk',
+            'login' => Schema::TYPE_STRING . ' NOT NULL',
+            'password' => Schema::TYPE_STRING . ' NOT NULL',
+        ]);
+    }
 
-	public function safeDown()
-	{
-		$this->dropTable('tbl_news');
-		$this->dropTable('tbl_user');
-	}
+    public function safeDown()
+    {
+        $this->dropTable('news');
+        $this->dropTable('user');
+    }
 
 }
 ```
@@ -169,8 +169,8 @@ the migrations, it will run the `up()` method in every new migration class, one
 after another, in the order of the timestamp value in the class name.
 
 After applying a migration, the migration tool will keep a record in a database
-table named `tbl_migration`. This allows the tool to identify which migrations
-have been applied and which are not. If the `tbl_migration` table does not exist,
+table named `migration`. This allows the tool to identify which migrations
+have been applied and which are not. If the `migration` table does not exist,
 the tool will automatically create it in the database specified by the `db`
 application component.
 
@@ -284,7 +284,7 @@ line:
   sub-directory under the application base path.
 
 * `migrationTable`: string, specifies the name of the database table for storing
-  migration history information. It defaults to `tbl_migration`. The table
+  migration history information. It defaults to `migration`. The table
   structure is `version varchar(255) primary key, apply_time integer`.
 
 * `connectionID`: string, specifies the ID of the database application component.

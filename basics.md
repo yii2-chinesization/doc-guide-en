@@ -55,7 +55,7 @@ $object = Yii::createObject([
     'class' => 'MyClass',
     'property1' => 'abc',
     'property2' => 'cde',
-], $param1, $param2);
+], [$param1, $param2]);
 ```
 
 
@@ -75,6 +75,14 @@ a class like `yii\web\Request` can be autoloaded by Yii. If you use a third part
 such as Zend Framework, you may define a path alias `@Zend` which refers to its installation
 directory and Yii will be able to autoload any class in this library.
 
+The following aliases are predefined by the core framework:
+
+- `@yii` - framework directory.
+- `@app` - base path of currently running application.
+- `@runtime` - runtime directory.
+- `@vendor` - Composer vendor directory.
+- `@webroot` - web root directory of currently running web application.
+- `@web` - base URL of currently running web application.
 
 Autoloading
 -----------
